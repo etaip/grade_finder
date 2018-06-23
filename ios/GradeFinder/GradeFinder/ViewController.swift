@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  grade_finder
+//  GradeFinder
 //
 //  Created by Etai Plushnick on 6/22/18.
 //  Copyright © 2018 Etai Plushnick. All rights reserved.

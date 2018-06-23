@@ -1,15 +1,15 @@
 //
-//  grade_finderTests.swift
-//  grade_finderTests
+//  GradeFinderTests.swift
+//  GradeFinderTests
 //
 //  Created by Etai Plushnick on 6/22/18.
 //  Copyright © 2018 Etai Plushnick. All rights reserved.
 //
 
 import XCTest
-@testable import grade_finder
+@testable import GradeFinder
 
-class grade_finderTests: XCTestCase {
+class GradeFinderTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
