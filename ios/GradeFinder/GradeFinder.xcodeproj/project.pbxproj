@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		62935BCA20DDFC96005B11A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62935BC920DDFC96005B11A8 /* AppDelegate.swift */; };
-		62935BCC20DDFC96005B11A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62935BCB20DDFC96005B11A8 /* ViewController.swift */; };
+		62935BCC20DDFC96005B11A8 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62935BCB20DDFC96005B11A8 /* InputViewController.swift */; };
 		62935BCF20DDFC96005B11A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62935BCD20DDFC96005B11A8 /* Main.storyboard */; };
 		62935BD120DDFC97005B11A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62935BD020DDFC97005B11A8 /* Assets.xcassets */; };
 		62935BD420DDFC97005B11A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62935BD220DDFC97005B11A8 /* LaunchScreen.storyboard */; };
 		62935BDF20DDFC97005B11A8 /* GradeFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62935BDE20DDFC97005B11A8 /* GradeFinderTests.swift */; };
+		62935BEA20DF263E005B11A8 /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62935BE920DF263E005B11A8 /* RestaurantTableViewCell.swift */; };
+		62935BEC20DF4416005B11A8 /* RestaurantTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62935BEB20DF4416005B11A8 /* RestaurantTableViewController.swift */; };
+		62935BF020DF451C005B11A8 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62935BEF20DF451C005B11A8 /* Restaurant.swift */; };
+		62935BF220DF4580005B11A8 /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62935BF120DF4580005B11A8 /* Grade.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +32,7 @@
 /* Begin PBXFileReference section */
 		62935BC620DDFC96005B11A8 /* GradeFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradeFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62935BC920DDFC96005B11A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		62935BCB20DDFC96005B11A8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		62935BCB20DDFC96005B11A8 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		62935BCE20DDFC96005B11A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		62935BD020DDFC97005B11A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		62935BD320DDFC97005B11A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +40,10 @@
 		62935BDA20DDFC97005B11A8 /* GradeFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GradeFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62935BDE20DDFC97005B11A8 /* GradeFinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeFinderTests.swift; sourceTree = "<group>"; };
 		62935BE020DDFC98005B11A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		62935BE920DF263E005B11A8 /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
+		62935BEB20DF4416005B11A8 /* RestaurantTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewController.swift; sourceTree = "<group>"; };
+		62935BEF20DF451C005B11A8 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		62935BF120DF4580005B11A8 /* Grade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +86,12 @@
 			isa = PBXGroup;
 			children = (
 				62935BC920DDFC96005B11A8 /* AppDelegate.swift */,
-				62935BCB20DDFC96005B11A8 /* ViewController.swift */,
+				62935BCB20DDFC96005B11A8 /* InputViewController.swift */,
 				62935BCD20DDFC96005B11A8 /* Main.storyboard */,
+				62935BE920DF263E005B11A8 /* RestaurantTableViewCell.swift */,
+				62935BEB20DF4416005B11A8 /* RestaurantTableViewController.swift */,
+				62935BEF20DF451C005B11A8 /* Restaurant.swift */,
+				62935BF120DF4580005B11A8 /* Grade.swift */,
 				62935BD020DDFC97005B11A8 /* Assets.xcassets */,
 				62935BD220DDFC97005B11A8 /* LaunchScreen.storyboard */,
 				62935BD520DDFC97005B11A8 /* Info.plist */,
@@ -197,8 +209,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62935BCC20DDFC96005B11A8 /* ViewController.swift in Sources */,
+				62935BF020DF451C005B11A8 /* Restaurant.swift in Sources */,
+				62935BCC20DDFC96005B11A8 /* InputViewController.swift in Sources */,
+				62935BEA20DF263E005B11A8 /* RestaurantTableViewCell.swift in Sources */,
+				62935BEC20DF4416005B11A8 /* RestaurantTableViewController.swift in Sources */,
 				62935BCA20DDFC96005B11A8 /* AppDelegate.swift in Sources */,
+				62935BF220DF4580005B11A8 /* Grade.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

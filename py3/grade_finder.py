@@ -37,12 +37,6 @@ DISPLAY_MAP = {
 START_SUBSTRING = 's0.brghCode'
 LAST_ENTRY_PREFIX = 'dwr.engine._remoteHandleCallback'
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('restaurant_name', type=str,
-                        help='Restaurant name to search for')
-    return parser.parse_args()
-
 
 def construct_address(restaurant):
     return restaurant['restBuilding'] + ' ' + restaurant['stName']
@@ -77,31 +71,35 @@ def parse_response(resp):
 
 
 def display_results(results):
+    formatted_results = ''
     for result in results:
-        print('Restaurant Name: {}'.format(result['restaurantName']))
-        print('Address: {}'.format(construct_address(result)))
+        formatted_results += 'Restaurant Name: {}\n'.format(result['restaurantName'])
+        formatted_results += 'Address: {}\n'.format(construct_address(result))
         for key in result:
             if key in DISPLAY_MAP:
                 if key == 'brghCode':
                     val = BOROUGH_MAP[result[key]]
                 else:
                     val = result[key]
-                print(DISPLAY_MAP[key] + ': ' + val)
-        print('=' * 100)
+                formatted_results += DISPLAY_MAP[key] + ': ' + val + '\n'
+        formatted_results += '=' * 100 + '\n'
+    return formatted_results
 
 
 def get_restaurant_results(restaurant_name):
     resp = requests.post(SEARCH_URL, data=SEARCH_PREFIX + restaurant_name + SEARCH_SUFFIX)
     if resp.status_code != http.HTTPStatus.OK:
         print('Received {} response!'.format(resp.status_code))
+        return []
     else:
         results = parse_response(resp.text)
-        display_results(results)
+        return results
 
 
 def main():
     restaurant_name = input('Enter a restaurant in New York City: ').strip()
-    get_restaurant_results(restaurant_name)
+    results = get_restaurant_results(restaurant_name)
+    print(display_results(results))
 
 
 if __name__ == '__main__':

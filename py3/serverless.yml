@@ -1,0 +1,25 @@
+service: grade-finder
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  profile: gradefinder
+
+functions:
+  get_grade_by_name:
+    handler: handler.get_grade_by_name
+    events:
+      - http:
+          path: grade/{name}
+          method: get
+          request:
+            paths:
+              name: true
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
