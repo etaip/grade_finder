@@ -39,7 +39,7 @@ LAST_ENTRY_PREFIX = 'dwr.engine._remoteHandleCallback'
 
 
 def construct_address(restaurant):
-    return restaurant['restBuilding'] + ' ' + restaurant['stName']
+    return restaurant['restBuilding'].strip() + ' ' + restaurant['stName'].strip()
 
 
 def parse_response(resp):
@@ -86,14 +86,30 @@ def display_results(results):
     return formatted_results
 
 
+def extract_relevant_data(restaurant_results):
+    limited_results = []
+    for result in restaurant_results:
+        restaurant_data = {
+            'name': result['restaurantName'],
+            'address': construct_address(result),
+            'borough': BOROUGH_MAP[result['brghCode']],
+            'grade': result['restCurrentGrade']
+        }
+        limited_results.append(restaurant_data)
+
+    return limited_results
+
+
 def get_restaurant_results(restaurant_name):
+    print('Getting restaurant results for {}'.format(restaurant_name))
     resp = requests.post(SEARCH_URL, data=SEARCH_PREFIX + restaurant_name + SEARCH_SUFFIX)
     if resp.status_code != http.HTTPStatus.OK:
         print('Received {} response!'.format(resp.status_code))
         return []
     else:
         results = parse_response(resp.text)
-        return results
+
+        return extract_relevant_data(results)
 
 
 def main():

@@ -18,7 +18,9 @@ class RestaurantTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        restaurants.removeAll()
         sendGradeRequest()
+        os_log("got here", log: OSLog.default, type: .debug)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -42,6 +44,20 @@ class RestaurantTableViewController: UITableViewController {
         return restaurants.count
     }
 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellIdentifier = "RestaurantTableViewCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? RestaurantTableViewCell else {
+            fatalError("The dequeued cell is not an instance of RestaurantTableViewCell.")
+        }
+        
+        let restaurant = restaurants[indexPath.row]
+        cell.nameLabel.text = restaurant.name
+        cell.addressLabel.text = restaurant.address
+        cell.gradeImage.image = loadPhoto(grade: restaurant.grade)
+        
+        return cell
+    }
+    
     //MARK: Private Methods
     @IBAction func sendGradeRequest() {
         guard let restaurantName = restaurantName else {
@@ -53,10 +69,18 @@ class RestaurantTableViewController: UITableViewController {
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if let data = data {
                 do {
-                    let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                    if let json = jsonSerialized, let url = json["url"], let explanation = json["explanation"] {
-                        os_log(url as! StaticString, log: OSLog.default, type: .info)
-                        os_log(explanation as! StaticString, log: OSLog.default, type: .info)
+                    let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
+                    if let results = jsonSerialized as? [Dictionary<String, String>] {
+                        os_log("JSON response is: %@", log: OSLog.default, type: .info, results)
+                        for result in results {
+                            guard let name = result["name"], let grade = result["grade"], let address = result["address"], let borough = result["borough"] else {
+                                os_log("Missing fields in restaurant: %@", log: OSLog.default, type: .info, result)
+                                return
+                            }
+                            
+                            let restaurant = Restaurant(name: name, grade: Grade(rawValue: grade)!, address: self.constructFullAddress(address: address, borough: borough))
+                            self.restaurants.append(restaurant)
+                        }
                     }
                 } catch let error as NSError {
                     os_log("Error - JSON serialization failed: %@", log: OSLog.default, type: .error, error)
@@ -69,16 +93,23 @@ class RestaurantTableViewController: UITableViewController {
         task.resume()
     }
     
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    private func constructFullAddress(address: String, borough: String) -> String {
+        return address + " " + borough + ", NY"
     }
-    */
 
+    private func loadPhoto(grade: Grade) -> UIImage {
+        switch (grade) {
+        case .A:
+            return UIImage(named: "gradeA")!
+        case .B:
+            return UIImage(named: "gradeB")!
+        case .C:
+            return UIImage(named: "gradeC")!
+        case .GradePending:
+            return UIImage(named: "gradePending")!
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
