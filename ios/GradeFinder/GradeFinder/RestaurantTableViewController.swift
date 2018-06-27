@@ -64,8 +64,12 @@ class RestaurantTableViewController: UITableViewController {
             fatalError("restaurantName is nil!")
         }
         
-        let url = URL(string: "https://zdf0mt0w6k.execute-api.us-east-1.amazonaws.com/dev/grade/\(restaurantName)")
+        guard let restaurantNameEncoded = restaurantName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
+            fatalError("Invalid encoding of restaurantName \(restaurantName)")
+        }
         
+        let url = URL(string: "https://zdf0mt0w6k.execute-api.us-east-1.amazonaws.com/dev/grade/\(restaurantNameEncoded)")
+        let semaphore = DispatchSemaphore(value: 0)
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if let data = data {
                 do {
@@ -73,9 +77,17 @@ class RestaurantTableViewController: UITableViewController {
                     if let results = jsonSerialized as? [Dictionary<String, String>] {
                         os_log("JSON response is: %@", log: OSLog.default, type: .info, results)
                         for result in results {
-                            guard let name = result["name"], let grade = result["grade"], let address = result["address"], let borough = result["borough"] else {
+                            guard let name = result["name"], let address = result["address"], let borough = result["borough"] else {
                                 os_log("Missing fields in restaurant: %@", log: OSLog.default, type: .info, result)
+                                semaphore.signal()
                                 return
+                            }
+                            
+                            var grade: String
+                            if (result["grade"] != nil) && result["grade"] != "" {
+                                grade = result["grade"]!
+                            } else {
+                                grade = "Not Yet Graded"
                             }
                             
                             let restaurant = Restaurant(name: name, grade: Grade(rawValue: grade)!, address: self.constructFullAddress(address: address, borough: borough))
@@ -88,9 +100,11 @@ class RestaurantTableViewController: UITableViewController {
             } else if let error = error {
                 os_log("Error - request failed: %@", log:OSLog.default, type: .error, error as CVarArg)
             }
+            semaphore.signal()
         }
         
         task.resume()
+        _ = semaphore.wait(timeout: DispatchTime.distantFuture)
     }
     
     private func constructFullAddress(address: String, borough: String) -> String {
@@ -106,6 +120,8 @@ class RestaurantTableViewController: UITableViewController {
         case .C:
             return UIImage(named: "gradeC")!
         case .GradePending:
+            return UIImage(named: "gradePending")!
+        case .NotYetGraded:
             return UIImage(named: "gradePending")!
         }
     }

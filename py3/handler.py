@@ -1,10 +1,11 @@
 import json
+from urllib.parse import unquote
 from grade_finder import get_restaurant_results
 
 def get_grade_by_name(event, context):
     print('Received event: {}'.format(event))
     event_input = json.loads(event) if isinstance(event, str) else event
-    restaurant_name = event_input['pathParameters']['name'].lower().strip()
+    restaurant_name = unquote(event_input['pathParameters']['name']).lower().strip()
     results = get_restaurant_results(restaurant_name)
 
     response = {

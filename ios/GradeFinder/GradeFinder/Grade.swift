@@ -11,4 +11,5 @@ enum Grade: String {
     case B = "B"
     case C = "C"
     case GradePending = "Grade Pending"
+    case NotYetGraded = "Not Yet Graded"
 }
