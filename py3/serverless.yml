@@ -16,6 +16,10 @@ functions:
           request:
             paths:
               name: true
+  scan_grades:
+    handler: handler.scan_grades
+    events:
+      - schedule: cron(0 6 ? * SUN *)
 
 plugins:
   - serverless-python-requirements
