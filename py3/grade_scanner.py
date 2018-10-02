@@ -127,7 +127,7 @@ def scan_all_restaurants():
     # Delete the existing index
     restaurants = Index('restaurants')
     if restaurants.exists():
-        restaurants.delete()
+         restaurants.delete()
 
     # Associate the index with the document type
     restaurants.doc_type(Restaurant)

@@ -83,14 +83,8 @@ class RestaurantTableViewController: UITableViewController {
                                 return
                             }
                             
-                            var grade: String
-                            if (result["grade"] != nil) && result["grade"] != "" {
-                                grade = result["grade"]!
-                            } else {
-                                grade = "Not Yet Graded"
-                            }
-                            
-                            let restaurant = Restaurant(name: name, grade: Grade(rawValue: grade)!, address: self.constructFullAddress(address: address, borough: borough))
+                            let grade = Grade(rawValue: result["grade"]!) ?? Grade.GradePending                            
+                            let restaurant = Restaurant(name: name, grade: grade, address: self.constructFullAddress(address: address, borough: borough))
                             self.restaurants.append(restaurant)
                         }
                     }

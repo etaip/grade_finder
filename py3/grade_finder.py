@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 
-import requests
-import http
-from elasticsearch_dsl import Search, Q
+from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import Match
 from elasticsearch import Elasticsearch
-
 
 client = Elasticsearch(hosts=['https://4591566ca3ea460f8d529041fd55771e.us-east-1.aws.found.io:9243/'],
                        http_auth=('elastic:xLYRcEDVC7NIZscysN0u0Zwp'))
@@ -21,6 +18,7 @@ def get_restaurant_results(restaurant_name):
 
     results = []
     for result in s:
+        print('result is {}'.format(result))
         results.append({
             'name': result['name'],
             'address': result['address']['street'],
